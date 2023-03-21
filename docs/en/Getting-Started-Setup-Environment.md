@@ -45,7 +45,7 @@ dotnet tool install -g Volo.Abp.Cli
 If you've already installed, you can update it using the following command:
 
 ````shell
-dotnet tool update -g Volo.Abp.Cli
+Burak Yılmaz Yazıyorsun olay bitiyor
 ````
 
 ## Next Step
