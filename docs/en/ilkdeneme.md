@@ -16,8 +16,7 @@
       <input type="text" id="username" name="username"><br><br>
       <label for="password">Şifre:</label>
       <input type="password" id="password" name="password"><br><br>
-      <input type="submit" value="Giriş Yap">
-      <button type="button">Click Me!</button>
+      <input type="submit" value="Giriş Yap" onclick="https://www.google.com.tr/?hl=tr">
     </form>
   </body>
 </html>
