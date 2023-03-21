@@ -1,4 +1,4 @@
-# Getting Started
+# Getting DENEME
 
 ````json
 //[doc-params]
