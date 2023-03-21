@@ -14,13 +14,6 @@
         }
       ]
     },
-	  {
-  "items": [
-    {
-      "text": "Denemeler",
-      "path": "markdown.md",
-      
-    },
     {
       "text": "Getting Started",
       "items": [
