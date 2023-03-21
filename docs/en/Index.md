@@ -1,97 +1,293 @@
-# ABP Documentation
+##  ABP Uygulama Başlatma
 
-ABP Framework offers an **opinionated architecture** to build enterprise software solutions with **best practices** on top of the **.NET** and the **ASP.NET Core** platforms. It provides the fundamental infrastructure, production-ready startup templates, modules, themes, tooling, guides and documentation to implement that architecture properly and **automate the details** and repetitive works as much as possible.
+[ ABP CLI ](CLI.md)'nin `abp new` komutunu önceden oluşturulmuş [ başlangıç ​​çözümü şablonlarından ](Başlangıç ​​Şablonları/Dizin ) biriyle [ başlamak ] (Getting-Started.md) için kullanırsınız .md). Bunu yaptığınızda, genellikle ABP Çerçevesinin uygulamanızla nasıl entegre edildiğine veya nasıl yapılandırılıp başlatıldığına ilişkin ayrıntıları bilmeniz gerekmez. Başlangıç ​​şablonu ayrıca temel ABP paketleri ile birlikte gelir ve [ uygulama modülleri ](Modüller/Dizin) sizin için önceden yüklenmiş ve yapılandırılmıştır.
 
-## Getting Started
+> Her zaman [bir başlangıç ​​şablonuyla çalışmaya başlamanız](Getting-Started.md) ve gereksinimlerinize göre değiştirmeniz önerilir. Bu belgeyi yalnızca ayrıntıları anlamak istiyorsanız veya ABP Çerçevesinin nasıl başladığını değiştirmeniz gerekiyorsa okuyun.
+ABP Çerçevesi birçok özelliğe ve entegrasyona sahipken, hafif ve modüler bir çerçeve olarak oluşturulmuştur. [ Yüzlerce NuGet ve NPM paketinden ](https://abp.io/packages) oluşur , böylece yalnızca ihtiyacınız olan özellikleri kullanabilirsiniz. [ Getting Started with an Empty ASP.NET Core MVC / Razor Pages Application ](Getting-Started-AspNetCore-Application.md) belgesini takip ederseniz , ABP Çerçevesini boş bir ASP'ye kurmanın ne kadar kolay olduğunu göreceksiniz. .NET Core projesi sıfırdan. Tek bir NuGet paketi kurmanız ve birkaç küçük değişiklik yapmanız yeterlidir.
 
-* [Quick Start](Tutorials/Todo/Overall.md) is a single-part, quick-start tutorial to build a simple application with the ABP Framework. Start with this tutorial if you want to quickly understand how ABP works.
-* [Getting Started](Getting-Started.md) guide can be used to create and run ABP based solutions with different options and details.
-* [Web Application Development Tutorial](Tutorials/Part-1.md) is a complete tutorial to develop a full stack web application with all aspects of a real-life solution.
+Bu belge, ABP Çerçevesinin başlangıçta nasıl başlatıldığını ve yapılandırıldığını daha iyi anlamak isteyenler içindir.
 
-### UI Framework Options
+##  Bir Konsol Uygulamasına Yükleme
 
-ABP Framework can work with any UI framework, while the following frameworks are supported out of the box:
+.NET Konsol uygulaması, minimalist .NET uygulamasıdır. Bu nedenle, ABP Çerçevesinin bir konsol uygulamasına yüklenmesini minimalist bir örnek olarak göstermek en iyisidir.
 
-<img width="500" src="images/ui-options.png">
+[ Visual Studio ile yeni bir konsol uygulaması oluşturursanız ] (https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio) (.NET 7.0 veya üstü için), aşağıdaki çözüm yapısına bakın (çözümü `MyConsoleDemo` olarak adlandırdım ):
 
-### Database Provider Options
+![ app-startup-console-initial ](images/app-startup-console-initial.png)
 
-ABP Framework can work with any database provider, while the following providers are supported out of the box:
+Bu örnek [ üst düzey ifadeleri ](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/top-level-statements) kullanır, dolayısıyla yalnızca tek bir satırdan oluşur. kod.
 
-<img width="500" src="images/db-options.png">
+İlk adım , ABP çerçevesinin en temel NuGet paketi olan [ Volo.Abp.Core ](https://www.nuget.org/packages/Volo.Abp.Core) NuGet paketini kurmaktır . Visual Studio'da [ Paket Yönetici Konsolu ](https://learn.microsoft.com/en-us/nuget/consume-packages/install-use-packages-powershell) kullanarak kurabilirsiniz :
 
-## Exploring the Documentation
+````bash
+Yükleme Paketi Volo.Abp.Core
+````
 
-ABP has a **comprehensive documentation** that not only explains the ABP Framework, but also includes **guides** and **samples** to help you on creating a **maintainable solution** by introducing and discussing common **software development principle and best practices**.
+Alternatif olarak, projenin kök klasöründe ( bu örnek için 'MyConsoleDemo.csproj' dosyasını içeren klasör) bir komut satırı terminali kullanabilirsiniz:
 
-### Architecture
+````bash
+dotnet eklenti paketi Volo.Abp.Core
+````
 
-ABP offers a complete, modular and layered software architecture based on [Domain Driven Design](Domain-Driven-Design.md) principles and patterns. It also provides the necessary infrastructure to implement this architecture.
+NuGet paketini ekledikten sonra uygulamamız için bir root [ module class ](Module-Development-Basics.md) oluşturmalıyız . Projede aşağıdaki sınıfı oluşturabiliriz:
 
-* See the [Modularity](Module-Development-Basics.md) document to understand the module system.
-* [Implementing Domain Driven Design book](https://abp.io/books/implementing-domain-driven-design?ref=doc) is an ultimate guide for who want to understand and implement the DDD with the ABP Framework.
-* [Microservice Architecture](Microservice-Architecture.md) document explains how ABP helps to create a microservice solution.
-* [Multi-Tenancy](Multi-Tenancy.md) document introduces multi-tenancy and explores the ABP multi-tenancy infrastructure.
+````csharp
+ Volo'yu kullanarak . Abp . modülerlik ;
+ad alanı  MyConsoleDemo
+{
+    genel  sınıf  MyConsoleDemoModule : AbpModule
+    {
+    }
+}
+````
 
-### Infrastructure
+Bu, "AbpModule" sınıfından türetilen boş bir sınıftır . Uygulamanızın bağımlılıklarını kontrol edeceğiniz, yapılandırma ve başlatma/kapatma mantığınızı uygulayacağınız ana sınıftır. Daha fazla bilgi için lütfen [ Modülerlik ](Module-Development-Basics.md) belgesini kontrol edin.
 
-There are a lot of features provided by the ABP Framework to achieve real world scenarios easier, like [Event Bus](Event-Bus.md), [Background Job System](Background-Jobs.md), [Audit Logging](Audit-Logging.md), [BLOB Storing](Blob-Storing.md), [Data Seeding](Data-Seeding.md), [Data Filtering](Data-Filtering.md).
+İkinci ve son adım olarak `Program.cs` dosyasını aşağıdaki kod bloğunda gösterildiği gibi değiştirin:
 
-### Cross Cutting Concerns
+````csharp
+ MyConsoleDemo'yu kullanarak ;
+ Volo'yu kullanarak . Abp ;
+// 1: ABP uygulama kapsayıcısını oluşturun
+ var  application  =  wait  AbpApplicationFactory kullanarak . CreateAsync < MyConsoleDemoModule >();
+// 2: ABP Çerçevesini (ve tüm modülleri) başlatın/başlatın
+ uygulama bekliyoruz . Async'i Başlat ();
+konsol . WriteLine ( " ABP Çerçevesi başlatıldı... " );
+// 3: ABP Çerçevesini (ve tüm modülleri) durdurun
+ uygulama bekliyoruz . KapatmaAsync ();
+````
 
-ABP also simplifies (and even automates wherever possible) cross cutting concerns and common non-functional requirements like [Exception Handling](Exception-Handling.md), [Validation](Validation.md), [Authorization](Authorization.md), [Localization](Localization.md), [Caching](Caching.md), [Dependency Injection](Dependency-Injection.md), [Setting Management](Settings.md), etc. 
+Bu kadar. Artık ABP Çerçevesi uygulamanıza yüklendi, entegre edildi, başlatıldı ve durduruldu. Şu andan itibaren [ ABP paketlerini ](https://abp.io/packages) ihtiyacınız olduğunda uygulamanıza yükleyebilirsiniz .
 
-### Application Modules
+##  Bir Çerçeve Paketi Yükleme
 
-Application Modules provides pre-built application functionalities;
+.NET uygulamanızdan e-posta göndermek istiyorsanız, .NET'in standart [ SmtpClient sınıfını ](https://learn.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient) kullanabilirsiniz. ABP ayrıca [ e-posta göndermeyi ](Emailing.md) ve e-posta ayarlarını merkezi bir yerde yapılandırmayı basitleştiren bir "IEmailSender" hizmeti sağlar. Kullanmak istiyorsanız, projenize [ Volo.Abp.Emailing ](https://www.nuget.org/packages/Volo.Abp.Emailing) NuGet paketini kurmalısınız:
 
-* [**Account**](Modules/Account.md): Provides UI for the account management and allows user to login/register to the application.
-* **[Identity](Modules/Identity.md)**: Manages organization units, roles, users and their permissions, based on the Microsoft Identity library.
-* [**OpenIddict**](Modules/OpenIddict.md): Integrates to OpenIddict.
-* [**Tenant Management**](Modules/Tenant-Management.md): Manages tenants for a [multi-tenant](Multi-Tenancy.md) (SaaS) application.
+````bash
+dotnet eklenti paketi Volo.Abp.Emailing
+````
 
-See the [Application Modules](Modules/Index.md) document for all pre-built modules.
+Yeni bir ABP paketi/modülü eklediğinizde, modül sınıfınızdan modül bağımlılığını da belirtmeniz gerekir. Bu nedenle, `MyConsoleDemoModule` sınıfını aşağıda gösterildiği gibi değiştirin :
 
-### Startup Templates
+````csharp
+ Volo'yu kullanarak . Abp . E-posta ;
+ Volo'yu kullanarak . Abp . modülerlik ;
+ad alanı  MyConsoleDemo
+{
+    [ DependsOn ( typeof ( AbpEmailingModule ))] // Modül bağımlılığı eklendi
+    genel  sınıf  MyConsoleDemoModule : AbpModule
+    {
+    }
+}
+````
 
-The [Startup templates](Startup-Templates/Index.md) are pre-built Visual Studio solution templates. You can create your own solution based on these templates to **immediately start your development**.
+ABP E-posta Modülünü ( `AbpEmailingModule` ) kullanmak istediğimi beyan etmek için bir `[DependsOn]` özniteliği ekledim . Artık "Program.cs" dosyamda "IEmailSender" hizmetini kullanabilirim :
 
-## Books
+````csharp
+ Microsoft'u kullanarak . Uzantılar _ Bağımlılık Enjeksiyonu ;
+ MyConsoleDemo'yu kullanarak ;
+ Volo'yu kullanarak . Abp ;
+ Volo'yu kullanarak . Abp . E-posta ;
+ var  application  =  wait  AbpApplicationFactory kullanarak . CreateAsync < MyConsoleDemoModule >();
+ uygulama bekliyoruz . Async'i Başlat ();
+// IEmailSender hizmetini kullanarak e-posta gönderme
+var  emailsender  =  uygulama . Hizmet Sağlayıcı GetRequiredService < IEmailSender >();
+ e-posta göndericisi bekleniyor . Async Gönder (
+    kime : " info@acme.com " ,
+    konu : " Merhaba Dünya " ,
+    body : " Mesajımın gövdesi... "
+);
+ uygulama bekliyoruz . KapatmaAsync ();
+````
 
-### Mastering ABP Framework
+> Bu uygulamayı çalıştırırsanız, e-posta gönderme ayarlarının henüz yapılmadığını belirten bir çalışma zamanı hatası alırsınız. Nasıl yapılandırılacağını öğrenmek için [Email Gönderme belgesini](Emailing.md) kontrol edebilirsiniz.
+Bu kadar. Bir ABP NuGet paketi yükleyin, modül bağımlılığını ekleyin ( "[DependsOn]" özniteliğini kullanarak) ve NuGet paketi içindeki herhangi bir hizmeti kullanın.
 
-![abp-book](images/abp-book.png)
+[ ABP CLI ](CLI.md), bir ABP NuGet'in eklenmesini gerçekleştirmek ve ayrıca tek bir komutla sizin için modül sınıfınıza "[DependsOn]" özniteliğini eklemek için zaten özel bir komuta sahiptir:
 
-*Mastering ABP Framework* is an ultimate guide to get started and expertise with the ABP Framework. It is authored by Halil İbrahim Kalkan, the creator and the lead developer of the ABP Framework.
+````bash
+abp eklenti paketi Volo.Abp.Emailing
+````
 
-**[You can order it from Amazon now](https://www.amazon.com/Mastering-ABP-Framework-maintainable-implementing-dp-1801079242/dp/1801079242)!**
+Manuel olarak yapmak yerine `abp add-package` komutunu kullanmanızı öneririz .
 
-### Free E-Book: Implementing Domain Driven Design
+##  AbpApplicationFactory
 
-![Implementing Domain Driven Design](images/implementing-domain-driven-design-book.png)
+"AbpApplicationFactory", bir ABP uygulama kapsayıcısı oluşturan ana sınıftır. Birden çok aşırı yükleme ile tek bir statik 'CreateAsync' (ve eşzamansız programlamayı kullanamıyorsanız 'Create' ) yöntemi sağlar . Bunları nerede kullanabileceğinizi anlamak için bu aşırı yüklemeleri inceleyelim.
 
-A **practical guide** for implementing Domain Driven Design (DDD). While the implementation details are **based on the ABP Framework** infrastructure, the basic concepts, principles and models can be applied to any solution, even if it is not a .NET solution.
+İlk aşırı yükleme, bu belgede daha önce kullandığımız gibi genel bir modül sınıfı parametresi alır:
 
-**[Click here to get your free copy](https://abp.io/books/implementing-domain-driven-design?ref=doc).**
+````csharp
+AbpApplicationFactory . CreateAsync < MyConsoleDemoModule >();
+````
 
-## ABP Community
+Genel sınıf parametresi, uygulamanızın kök modül sınıfı olmalıdır. Diğer tüm modüller, o modülün bağımlılıkları olarak çözümlenir.
 
-### The Source Code
+İkinci aşırı yükleme, modül sınıfını genel parametre yerine bir "Tür" parametresi olarak alır. Böylece, önceki kod bloğu aşağıda gösterildiği gibi yeniden yazılabilir:
 
-ABP is hosted on GitHub. See [the source code](https://github.com/abpframework).
+````csharp
+AbpApplicationFactory . CreateAsync ( typeof ( MyConsoleDemoModule ));
+````
 
-### ABP Community Web Site
+Her iki aşırı yük de tamamen aynı şekilde çalışır. Bu nedenle, geliştirme zamanında modül sınıfı türünü bilmiyorsanız ve (bir şekilde) çalışma zamanında hesaplarsanız ikincisini kullanabilirsiniz.    
 
-The [ABP Community](https://community.abp.io/) is a website to publish articles and share knowledge about the ABP Framework. You can also create content for the community!
+Yukarıdaki yöntemlerden birini oluşturursanız ABP, [ bağımlılık enjeksiyonu ](Dependency-Injection.md) sistemini dahili olarak kurmak için bir dahili hizmet koleksiyonu ( 'IServiceCollection' ) ve bir dahili hizmet sağlayıcısı ( 'IServiceProvider' ) oluşturur . Bağımlılık enjeksiyon sisteminden 'IEmailSender' hizmetini çözmek için *Bir Çerçeve Paketi Kurma* bölümündeki 'application.ServiceProvider' özelliğini kullandığımıza dikkat edin .
 
-### Blog
+Bir sonraki aşırı yükleme, bağımlılık enjeksiyon sistemini kendiniz kurmanıza veya bağımlılık enjeksiyon sistemini dahili olarak kuran başka bir çerçeveye (ASP.NET Core gibi) entegre etmenize izin vermek için sizden bir " IServiceCollection" parametresi alır.
 
-Follow the [ABP Blog](https://blog.abp.io/) to learn the latest happenings in the ABP Framework.
+Bağımlılık enjeksiyon kurulumunu harici olarak yönetmek için "Program.cs" yi aşağıda gösterildiği gibi değiştirebiliriz :
 
-### Samples
+````csharp
+ Microsoft'u kullanarak . Uzantılar _ Bağımlılık Enjeksiyonu ;
+ MyConsoleDemo'yu kullanarak ;
+ Volo'yu kullanarak . Abp ;
+// 1: IServiceCollection'ı manuel olarak oluşturdu
+IServiceCollection  hizmetleri  =  yeni  ServiceCollection ();
+// 2: IServiceCollection'ı harici olarak ABP Çerçevesine geçirin
+ var  uygulama  kullanarak =  AbpApplicationFactory'yi bekliyoruz 
+    . CreateAsync < MyConsoleDemoModule >( hizmetler );
+// 3: IServiceProvider nesnesini el ile oluşturdu
+IServiceProvider  serviceProvider  =  hizmetler . BuildServiceProvider ();
+// 4: IServiceProvider'ı harici olarak ABP Çerçevesine geçirin
+ uygulama bekliyoruz . InitializeAsync ( hizmet Sağlayıcı );
+konsol . WriteLine ( " ABP Çerçevesi başlatıldı... " );
+ uygulama bekliyoruz . KapatmaAsync ();
+````
 
-See the [sample projects](Samples/Index.md) built with the ABP Framework.
+Bu örnekte, .NET'in standart bağımlılık enjeksiyon kapsayıcısını kullandık. " services.BuildServiceProvider ()" çağrısı standart kapsayıcıyı oluşturur. Ancak ABP, başka bir bağımlılık enjeksiyon kapsayıcısı kullanıyor olsanız bile düzgün çalışan alternatif bir uzatma yöntemi olan 'BuildServiceProviderFromFactory()' sağlar:
 
-### Want to Contribute?
+````csharp
+IServiceProvider  serviceProvider  =  hizmetler . BuildServiceProviderFromFactory ();
+````
 
-ABP is a community-driven open source project. See [the contribution guide](Contribution/Index.md) if you want to be a part of this project.
+> [Autofac](https://autofac.org/) bağımlılık enjeksiyon kapsayıcısını ABP Çerçevesi ile nasıl entegre edebileceğinizi öğrenmek istiyorsanız [Autofac Integration](Autofac-Integration.md) belgesini kontrol edebilirsiniz.
+Son olarak, "CreateAsync" yöntemi, modül sınıfı adını "Type" parametresi ve "IServiceCollection" nesnesi olarak alan son bir aşırı yüklemeye sahiptir. Böylece, son `CreateAsync` method kullanımını aşağıdaki kod bloğundaki gibi yeniden yazabiliriz :
+
+````csharp
+ var  uygulama  kullanarak =  AbpApplicationFactory'yi bekliyoruz 
+    . CreateAsync ( typeof ( MyConsoleDemoModule ), hizmetler );
+````
+
+> Tüm "CreateAsync" yöntemi aşırı yüklemelerinin "Create" karşılıkları vardır. Uygulama türünüz eşzamansız programlama kullanamıyorsa (bu, "await" anahtar kelimesini kullanamayacağınız anlamına gelir), "CreateAsync" yöntemi yerine "Create" yöntemini kullanabilirsiniz.
+###  AbpApplicationCreationOptions
+
+Tüm "CreateAsync" aşırı yüklemeleri , uygulama oluşturmada kullanılan seçenekleri yapılandırmak için isteğe bağlı bir "Action<AbpApplicationCreationOptions>" parametresi alabilir . Aşağıdaki örneğe bakın:
+
+````csharp
+ var  uygulama  kullanarak =  AbpApplicationFactory'yi bekliyoruz 
+    . CreateAsync < MyConsoleDemoModule >( seçenekler  = >
+    {
+        seçenekler . UygulamaAdı  = " Uygulamam ";
+    });
+````
+
+"ApplicationName" seçeneğini yapılandırmak için bir lambda yöntemini geçtik . İşte tüm standart seçeneklerin bir listesi:
+
+*  `ApplicationName` : Uygulama için insanlar tarafından okunabilen bir ad. Bir uygulama için benzersiz bir değerdir.
+*  `Yapılandırma` : Barındırma sistemi tarafından sağlanmadığında [ uygulama yapılandırmasını ](Configuration.md) ayarlamak için kullanılabilir . ASP.NET Core ve diğer .NET tarafından barındırılan uygulamalar için gerekli değildir. Ancak, dahili bir hizmet sağlayıcıyla "AbpApplicationFactory" kullandıysanız , uygulama yapılandırmasının nasıl oluşturulacağını yapılandırmak için bu seçeneği kullanabilirsiniz.
+*  `Environment` : Uygulama için ortam adı.
+*  `PlugInSources` : Eklenti kaynaklarının listesi. Eklentilerle nasıl çalışılacağını öğrenmek için [ Eklenti Modülleri belgelerine ](PlugIn-Modules) bakın.
+*  `Services` : Hizmet bağımlılıklarını kaydetmek için kullanılabilecek `IServiceCollection` nesnesi. Hizmetlerinizi [ modül sınıfı ](Module-Development-Basics.md) içinde yapılandırdığınız için genellikle buna ihtiyacınız olmaz. Ancak, AbpApplicationCreationOptions sınıfı için uzantı yöntemleri yazılırken kullanılabilir .
+
+####  UygulamaAdı seçeneği
+
+Yukarıda tanımlandığı gibi, 'UygulamaAdı' seçeneği, uygulama için insanlar tarafından okunabilen bir addır. Bir uygulama için benzersiz bir değerdir.
+
+"ApplicationName", uygulamayı ayırt etmek için ABP Çerçevesi tarafından birkaç yerde kullanılır. Örneğin, [ denetim günlüğü ](Audit-Logging.md) sistemi, ilgili uygulama tarafından yazılan her denetim günlüğü kaydında "UygulamaAdı" nı kaydeder , böylece denetim günlüğü girişini hangi uygulamanın oluşturduğunu anlayabilirsiniz. Bu nedenle, sisteminiz denetim günlüklerini tek bir noktaya kaydeden birden fazla uygulamadan (bir mikro hizmet çözümü gibi) oluşuyorsa, her uygulamanın farklı bir `ApplicationName` olduğundan emin olmalısınız .
+
+"ApplicationName" özelliğinin değeri, varsayılan olarak **giriş derlemesinin adından** (genellikle bir .NET çözümündeki proje adı) otomatik olarak ayarlanır ; bu, çoğu durumda uygundur, çünkü her uygulamanın tipik olarak benzersiz bir giriş derlemesi adı vardır .
+
+Uygulama adını farklı bir değere ayarlamanın iki yolu vardır. Bu ilk yaklaşımda, uygulamanızın [ yapılandırma ](Configuration.md) içinde "ApplicationName" özelliğini ayarlayabilirsiniz . En kolay yol, "appsettings.json" dosyanıza bir "ApplicationName" alanı eklemektir :
+
+````json
+{
+    "ApplicationName" : " Services.Ordering "
+}
+````
+
+Alternatif olarak, ABP uygulamasını oluştururken `AbpApplicationCreationOptions.ApplicationName` öğesini ayarlayabilirsiniz . Çözümünüzde (genellikle "Program.cs" dosyasında) "AddApplication" veya "AddApplicationAsync" çağrısını bulabilir ve "ApplicationName" seçeneğini aşağıda gösterildiği gibi ayarlayabilirsiniz:
+
+````csharp
+ inşaatçıyı bekliyor . AddApplicationAsync < OrderingServiceHttpApiHostModule >( seçenekler  =>
+{
+    seçenekler . ApplicationName  =  " Services.Ordering " ;
+});
+````
+
+####  IApplicationInfoAccessor
+
+Çözümünüzde daha sonra "ApplicationName" öğesine erişmeniz gerekirse , "IApplicationInfoAccessor" hizmetini enjekte edebilir ve değeri onun "ApplicationName" özelliğinden alabilirsiniz.
+
+"IApplicationInfoAccessor" , uygulamanız başladığında oluşturulan rastgele bir GUID değeri olan "InstanceId" değerini de sağlar . Uygulama örneklerini birbirinden ayırmak için bu değeri kullanabilirsiniz.
+
+##  IAbpUygulaması
+
+"AbpApplicationFactory", "CreateAsync" (veya "Create" ) yönteminden bir "IAbpApplication" nesnesi döndürür . "IAbpApplication", bir ABP uygulaması için ana kapsayıcıdır. Aynı zamanda [ Dependency Injection ](Dependency-Injection.md) sistemine kayıtlı olduğundan , özelliklerini ve yöntemlerini kullanmak için hizmetlerinize 'IAbpApplication' enjekte edebilirsiniz .
+
+İşte bilmek isteyebileceğiniz "IAbpApplication" özelliklerinin bir listesi:
+
+*  `StartupModuleType` : Uygulama kapsayıcısı oluşturulurken kullanılan uygulamanın kök modülünü alır ( `AbpApplicationFactory.CreateAsync` yönteminde).
+*  "Hizmetler" : Tüm hizmet kayıtlarının listesi ( "IServiceCollection" nesnesi). Uygulama başlatıldıktan sonra bu koleksiyona yeni hizmetler ekleyemezsiniz (aslında ekleyebilirsiniz, ancak bunun herhangi bir etkisi olmaz).
+*  `ServiceProvider` : Uygulama tarafından kullanılan kök servis sağlayıcıya bir referans. Bu, uygulama başlatılmadan önce kullanılamaz. Tekil olmayan hizmetleri bu "IServiceProvider" nesnesinden çözmeniz gerekirse , her zaman yeni bir hizmet kapsamı oluşturun ve kullanımdan sonra atın. Aksi takdirde, uygulamanızda bellek sızıntısı sorunları olacaktır. Hizmet kapsamları hakkında daha fazla bilgi için [ bağımlılık enjeksiyonu ](Dependency-Injection.md) belgesinin *Hizmetleri Serbest Bırakma/Elden Çıkarma* bölümüne bakın .
+*  `Modüller` : Geçerli uygulamaya yüklenen tüm modüllerin salt okunur listesi. Alternatif olarak, uygulama kodunuzdaki modül listesine erişmeniz gerekiyorsa `IModuleContainer` hizmetini enjekte edebilirsiniz .
+
+"IAbpApplication" arabirimi , "IApplicationInfoAccessor" arabirimini genişletir , böylece "ApplicationName" ve "InstanceId" değerlerini buradan alabilirsiniz . Ancak, yalnızca bu özelliklere erişmeniz gerekiyorsa, bunun yerine 'IApplicationInfoAccessor' hizmetini enjekte edin ve kullanın.
+
+`IAbpApplication` tek kullanımlıktır. Uygulamanızdan çıkmadan önce daima atın.
+
+##  IAbpHostEnvironment
+
+Bazen bir uygulama oluştururken mevcut barındırma ortamını almamız ve ona göre hareket etmemiz gerekir. Bu gibi durumlarda [ IWebHostEnvironment ](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.hosting.iwebhostenvironment?view=aspnetcore-7.0) veya [ IWebAssemblyHostEnvironment gibi bazı hizmetleri kullanabiliriz. ](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment) son uygulamada .NET tarafından sağlanmıştır.
+
+Ancak, bu hizmetleri son uygulama tarafından kullanılan bir sınıf kitaplığında kullanamayız. ABP Çerçevesi , istediğiniz zaman geçerli ortam adını almanızı sağlayan "IAbpHostEnvironment" hizmetini sağlar. "IAbpHostEnvironment", ortam tarafından belirli eylemleri gerçekleştirmek için ABP Çerçevesi tarafından çeşitli yerlerde kullanılır. Örneğin ABP Çerçevesi, bazı hizmetler için **Geliştirme** ortamındaki önbellek süresini azaltır .
+
+"IAbpHostEnvironment", geçerli ortam adını aşağıdaki sırayla alır:
+
+1. `AbpApplicationCreationOptions` içinde belirtilmişse, ortam adını alır ve ayarlar .
+2. Ortam adı "AbpApplicationCreationOptions" içinde belirtilmemişse, ASP.NET Core & Blazor WASM uygulamaları için "IWebHostEnvironment " veya "IWebAssemblyHostEnvironment" hizmetlerinden ortam adını almaya çalışır .
+3. Ortam adı belirtilmemişse veya hizmetlerden alınamıyorsa, ortam adını **Üretim** olarak ayarlar .
+
+ABP uygulamasını oluştururken "AbpApplicationCreationOptions" [ options class ](Options.md) öğesini yapılandırabilir ve "Environment" özelliğine bir ortam adı atayabilirsiniz. Çözümünüzde (genellikle "Program.cs" dosyasında) "AddApplication" veya "AddApplicationAsync" çağrısını bulabilir ve "Ortam" seçeneğini aşağıda gösterildiği gibi ayarlayabilirsiniz:
+
+```csharp
+ inşaatçıyı bekliyor . AddApplicationAsync < OrderingServiceHttpApiHostModule >( seçenekler  =>
+{
+    seçenekler . Ortam  =  Ortamlar . sahneleme ; // veya doğrudan "Hazırlama" olarak ayarlayın
+});
+```
+
+Ardından, mevcut ortam adını almanız veya ortamı kontrol etmeniz gerektiğinde, "IAbpHostEnvironment" arayüzünü kullanabilirsiniz :
+
+```csharp
+genel  sınıf  MyDemoService
+{
+    özel  salt okunur  IAbpHostEnvironment  _abpHostEnvironment ;
+    
+    genel  MyDemoService ( IAbpHostEnvironment  abpHostEnvironment )
+    {
+        _abpHostEnvironment  =  abpHostEnvironment ;
+    }
+    genel  geçersiz  MyMethod ()
+    {
+        var  ortamAdı  =  _abpHostEnvironment . OrtamAdı ;
+        if ( _abpHostEnvironment . IsDevelopment ()) { /* ... */ }
+        if ( _abpHostEnvironment . IsStaging ()) { /* ... */ }
+        if ( _abpHostEnvironment . IsProduction ()) { /* ... */ }
+        if ( _abpHostEnvironment . IsEnvironment ( " özel ortam " )) { /* ... */ }
+    }
+}
+```
+
+##  .NET Genel Ana Bilgisayar ve ASP.NET Çekirdek Entegrasyonları
+
+`AbpApplicationFactory`, herhangi bir dış bağımlılık olmadan bağımsız bir ABP uygulama kapsayıcısı oluşturabilir. Ancak çoğu durumda [ .NET'in genel ana bilgisayarı ](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host) veya ASP.NET Core ile entegre etmek isteyeceksiniz . Bu tür kullanımlar için ABP, bu sistemlere iyi entegre edilmiş bir ABP uygulama kapsayıcısını kolayca oluşturmak için yerleşik genişletme yöntemleri sağlar.
+
+[ Getting Started with an Empty ASP.NET Core MVC / Razor Pages Application ](Getting-Started-AspNetCore-Application.md) belgesi, bir ASP.NET Core uygulamasında nasıl bir ABP uygulama kapsayıcısı oluşturabileceğinizi açık bir şekilde açıklar.
+
+Ayrıca .NET Generic Host ile nasıl entegre edildiğini görmek için [ bir konsol uygulaması oluşturabilirsiniz ](Başlangıç ​​Şablonları/Konsol).
+
+> Çoğu zaman, ABP CLI'nin "yeni" komutunu kullanarak doğrudan ABP uygulamaları oluşturacaksınız. Bu nedenle, bu entegrasyon ayrıntılarını önemsemenize gerek yok.
+##  Ayrıca Bakın
+
+* [ Bağımlılık enjeksiyonu ](Dependency-Injection.md)
+* [ Modülerlik ](Module-Development-Basics.md)
