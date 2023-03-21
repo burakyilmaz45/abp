@@ -16,7 +16,17 @@
     },
     {
 	    "text":"DENEMEMenu",
-	    "path":"markdown.md"
+	    "path":"markdown.md",
+	    "items":[
+		    {
+			"text":"Markdown Sayfası",
+		     	"path":"markdown.md"
+		    },
+		    {
+			"text":"HTML sayfası",
+			"path":"deneme.html"
+		    }
+	    ]
     },
 	  
     {
