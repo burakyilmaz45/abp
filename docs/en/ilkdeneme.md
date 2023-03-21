@@ -1,6 +1,7 @@
 
-	|ID				  |	Code	| Name
-	|8sa5f6dsd56fds65f|String	|Burak
+	|ID|Code|Name|
+	|--|:----:|:----:|
+	|8sa5f6dsd56fds65f|String|Burak|
 [Google araması için tıklayınız..](https://www.google.com.tr/?hl=tr)`
 
 
