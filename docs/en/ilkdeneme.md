@@ -25,7 +25,7 @@
         var password = document.getElementById("password").value;
         
         if (username == "admin" && password == "admin123") {
-          window.location.href = "Index.md";
+          window.location.href = "/Index";
         } else {
           alert("Hatalı kullanıcı adı veya şifre!");
         }
