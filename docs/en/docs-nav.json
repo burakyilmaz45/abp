@@ -1436,48 +1436,8 @@
         }
       ]
     },
-    {
-      "text": "Books",
-      "items": [
-        {
-          "text": "Mastering ABP Framework",
-          "path": "https://abp.io/books/mastering-abp-framework"
-        },
-        {
-          "text": "Implementing Domain Driven Design",
-          "path": "https://abp.io/books/implementing-domain-driven-design"
-        }
-      ]
-    },
-    {
-      "text": "Release Information",
-      "items": [
-        {
-          "text": "Upgrading",
-          "path": "Upgrading.md"
-        },
-        {
-          "text": "Official Packages",
-          "path": "https://abp.io/packages"
-        },
-        {
-          "text": "Preview Releases",
-          "path": "Previews.md"
-        },
-        {
-          "text": "Nightly Builds",
-          "path": "Nightly-Builds.md"
-        },
-        {
-          "text": "Road Map",
-          "path": "Road-Map.md"
-        },
-        {
-          "text": "Migration Guides",
-          "path": "Migration-Guides/Index.md"
-        }
-      ]
-    },
+    
+    
     {
       "text": "Contribution Guide",
       "path": "Contribution/Index.md"
