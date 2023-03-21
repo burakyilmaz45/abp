@@ -1,7 +1,9 @@
 
-	|ID|Code|Name|
-	|--|:----:|:----:|
-	|8sa5f6dsd56fds65f|String|Burak|
+| Left columns  | Right columns |
+| ------------- |:-------------:|
+| left foo      | right foo     |
+| left bar      | right bar     |
+| left baz      | right baz     |
 [Google araması için tıklayınız..](https://www.google.com.tr/?hl=tr)`
 
 
