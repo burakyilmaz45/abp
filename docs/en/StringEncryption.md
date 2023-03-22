@@ -38,6 +38,7 @@ namespace Serender.Definitions.CustomerMasters
 **IStringEncryptionService**
 
 * * *
+
 ```csharp
 using JetBrains.Annotations;
 using System;
@@ -62,6 +63,7 @@ namespace Serender.Definitions.CustomerMasters
 **StringEncryptionService**
 
 * * *
+
 ```csharp
 using Microsoft.Extensions.Options;
 using System;
