@@ -29,6 +29,11 @@
 	    ]
     },
 	  
+	  {
+	    "text":"String Encryption",
+	    "path":"StringEncryption.md"
+    },
+	  
     {
       "text": "Getting Started",
       "items": [
