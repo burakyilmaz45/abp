@@ -2,7 +2,7 @@
 
 İlk olarak Volo.Abp.Security paketinde bulunan StringEncryption modülü hatalı olduğu için bu modülün kodlarını ABP GitHup repository’ sinden kodlarını alıp kendimiz oluşturuyoruz.
 
-span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family: Symbol'>· unun için Domain katmanında **AbpStringEncryptionOptions, IStringEncryptionService** ve **StringEncryptionService** adında üç tane sınıf oluşturuyoruz.
+Bunun için Domain katmanında **AbpStringEncryptionOptions, IStringEncryptionService** ve **StringEncryptionService** adında üç tane sınıf oluşturuyoruz.
 
 **AbpStringEncryptionOptions**
 
