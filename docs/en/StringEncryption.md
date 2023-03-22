@@ -46,7 +46,7 @@ code {
     background-color: #1e1e1e;
 }
 </style>
-```
+```csharp
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
