@@ -9,6 +9,14 @@ Bunun için Domain katmanında **AbpStringEncryptionOptions, IStringEncryptionSe
 * * *
 
 ```csharp
+<style>
+pre {
+    background-color: #1e1e1e;
+}
+code {
+    background-color: #1e1e1e;
+}
+</style>
 using System;
 using System.Collections.Generic;
 using System.Text;
