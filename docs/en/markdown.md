@@ -49,7 +49,7 @@
 
 -------
 
-## CheckBox
+
 - [x] Erkek
 - [ ] Kadın
 
