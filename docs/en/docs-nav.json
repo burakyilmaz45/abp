@@ -33,6 +33,10 @@
 	    "text":"String Encryption",
 	    "path":"StringEncryption.md"
     },
+	  {
+	    "text":"MVC",
+	    "path":"MVC.md"
+    },
 	  
     {
       "text": "Getting Started",
