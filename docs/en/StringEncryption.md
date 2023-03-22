@@ -7,8 +7,6 @@ Bunun için Domain katmanında **AbpStringEncryptionOptions, IStringEncryptionSe
 **AbpStringEncryptionOptions**
 
 * * *
-
-```csharp
 <style>
 pre {
     background-color: #1e1e1e;
@@ -17,6 +15,8 @@ code {
     background-color: #1e1e1e;
 }
 </style>
+```csharp
+
 using System;
 using System.Collections.Generic;
 using System.Text;
