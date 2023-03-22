@@ -62,6 +62,7 @@ namespace Serender.Definitions.CustomerMasters
 
 **StringEncryptionService**
 
+* * *
 ```
 using Microsoft.Extensions.Options;
 using System;
@@ -183,12 +184,14 @@ namespace Serender.Definitions.CustomerMasters
     }
 }
 ```
+* * *
 
 - · StringEncryption modülü tamamladıktan sonra Domain.Shared katmanında Attributes isminde bir klasör oluşturuyoruz.
 - · Attributes klasörü içinde **EncryptAttribute** isminde bir sınıf oluşturuyoruz.
 
 **EncryptAttribute**
 
+* * *
 ```
 using System;
 using System.Collections.Generic;
@@ -206,19 +209,22 @@ namespace Serender.Definitions.Attributes
     }
 }
 ```
+* * *
 
 - CustomerMaster sınıfında şifreleme işlemi yapmak istediğimiz field için bu attribute’ u kullanıyoruz.
 
+* * *
 ```
 [Encrypt]
 public string Adress { get; set; }
 ```
+* * *
 
 - · Otomatik şifreleme işlemi için Application.Contracts katmanında CustomerMaster klasörüne **CustomerMasterEncryptDto** isminde yeni bir DTO ekliyoruz.
     
 - · Domain katmanındaki CustomerMaster.cs ‘de olduğu gibi şifrelemek istediğimiz field için EncryptAttribute’ u kullanıyoruz.
     
-
+* * *
 ```
 using Serender.Definitions.Attributes;
 using System;
@@ -246,6 +252,7 @@ namespace Serender.Definitions.CustomerMasters
     }
 }
 ```
+* * *
 
 - · Create metodunda otomatik encryption işlemini kullanabilmek için yeni bir **CustomerMasterEnctyptDtoMapper** isminde yeni bir Mapper sınıfı oluşturuyoruz.
 - · Get ve GetList metodunda otomatik decryption işlemini kullanabilmek için yeni bir **CustomCustomerMasterMapper** isminde yeni bir Mapper sınıfı oluşturuyoruz.
@@ -254,6 +261,7 @@ namespace Serender.Definitions.CustomerMasters
 
 **CustomerMasterEnctyptDtoMapper**
 
+* * *
 ```
 using Serender.Definitions.Attributes;
 using Serender.Definitions.CustomerMasters;
@@ -311,9 +319,11 @@ namespace Serender.Definitions
     }
 }
 ```
+* * *
 
 **CustomCustomerMasterMapper**
 
+* * *
 ```
 using Serender.Definitions.Attributes;
 using Serender.Definitions.CustomerMasters;
@@ -372,9 +382,11 @@ namespace Serender.Definitions
     }
 }
 ```
+* * *
 
 **CustomerMasterUpdateDtoMapper**
 
+* * *
 ```
 using AutoMapper;
 using Serender.Definitions.CustomerMasters;
@@ -432,11 +444,13 @@ namespace Serender.Definitions
     }
 }
 ```
+* * *
 
 **APPLICATION KATMANINDA BULUNAN CUSTOMERMASTER SINIFINDA YAPILMASI GEREKEN DEĞİŞİKLİKLER**
 
 - Application katmanında bulunan CustomerMasterAppService sınıfı içerine ilk olarak StringEncryption ve ObjectMapper interface’ leri ekliyoruz.
 
+* * *
 ```
 public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAppService
     { 
@@ -455,6 +469,7 @@ public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAp
         }
 }
 ```
+* * *
 
 **CreateAsync Metodu**
 
@@ -468,6 +483,7 @@ public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAp
 
 - Bu iki metot da yapmamız gereken değişiklik sadece return işleminde kendi oluşturduğumuz mapper ‘ ı kullanmak.
 
+* * *
 ```
 public async Task<CustomerMasterDto> GetAsync(Guid id)
         {
@@ -518,6 +534,7 @@ public async Task<PagedResultDto<CustomerMasterDto>> GetListAsync(GetCustomerMas
             );
         }
 ```
+* * *
 
 **UpdateAsync metodu**
 
@@ -529,6 +546,8 @@ public async Task<PagedResultDto<CustomerMasterDto>> GetListAsync(GetCustomerMas
 
 · Update işlemi için gerekli olan verileri kullanıcıdan gelen input yerine mapper işleminden geri dönen değerler ile gerçekleştiriyoruz.
 
+
+* * *
 ```
 public async Task <CustomerMasterDto> UpdateAsync(Guid id, UpdateCustomerMasterDto input)
         {
@@ -549,3 +568,4 @@ public async Task <CustomerMasterDto> UpdateAsync(Guid id, UpdateCustomerMasterD
             return _objectMapper.Map<CustomerMaster, CustomerMasterDto>(customerMaster);
         }
 ```
+* * *
