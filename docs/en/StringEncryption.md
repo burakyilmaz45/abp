@@ -38,7 +38,14 @@ namespace Serender.Definitions.CustomerMasters
 **IStringEncryptionService**
 
 * * *
-
+<style>
+pre {
+    background-color: #1e1e1e;
+}
+code {
+    background-color: #1e1e1e;
+}
+</style>
 ```
 using JetBrains.Annotations;
 using System;
