@@ -38,14 +38,6 @@ namespace Serender.Definitions.CustomerMasters
 **IStringEncryptionService**
 
 * * *
-<style>
-pre {
-    background-color: #1e1e1e;
-}
-code {
-    background-color: #1e1e1e;
-}
-</style>
 ```csharp
 using JetBrains.Annotations;
 using System;
@@ -70,7 +62,7 @@ namespace Serender.Definitions.CustomerMasters
 **StringEncryptionService**
 
 * * *
-```
+```csharp
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -199,7 +191,7 @@ namespace Serender.Definitions.CustomerMasters
 **EncryptAttribute**
 
 * * *
-```
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -221,7 +213,7 @@ namespace Serender.Definitions.Attributes
 - CustomerMaster sınıfında şifreleme işlemi yapmak istediğimiz field için bu attribute’ u kullanıyoruz.
 
 * * *
-```
+```csharp
 [Encrypt]
 public string Adress { get; set; }
 ```
@@ -232,7 +224,7 @@ public string Adress { get; set; }
 - · Domain katmanındaki CustomerMaster.cs ‘de olduğu gibi şifrelemek istediğimiz field için EncryptAttribute’ u kullanıyoruz.
     
 * * *
-```
+```csharp
 using Serender.Definitions.Attributes;
 using System;
 using System.Collections.Generic;
@@ -269,7 +261,7 @@ namespace Serender.Definitions.CustomerMasters
 **CustomerMasterEnctyptDtoMapper**
 
 * * *
-```
+```csharp
 using Serender.Definitions.Attributes;
 using Serender.Definitions.CustomerMasters;
 using System;
@@ -331,7 +323,7 @@ namespace Serender.Definitions
 **CustomCustomerMasterMapper**
 
 * * *
-```
+```csharp
 using Serender.Definitions.Attributes;
 using Serender.Definitions.CustomerMasters;
 using System;
@@ -394,7 +386,7 @@ namespace Serender.Definitions
 **CustomerMasterUpdateDtoMapper**
 
 * * *
-```
+```csharp
 using AutoMapper;
 using Serender.Definitions.CustomerMasters;
 using Volo.Abp.DependencyInjection;
@@ -458,7 +450,7 @@ namespace Serender.Definitions
 - Application katmanında bulunan CustomerMasterAppService sınıfı içerine ilk olarak StringEncryption ve ObjectMapper interface’ leri ekliyoruz.
 
 * * *
-```
+```csharp
 public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAppService
     { 
   //…
@@ -491,7 +483,7 @@ public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAp
 - Bu iki metot da yapmamız gereken değişiklik sadece return işleminde kendi oluşturduğumuz mapper ‘ ı kullanmak.
 
 * * *
-```
+```csharp
 public async Task<CustomerMasterDto> GetAsync(Guid id)
         {
             var queryable = await _customerMasterRepository.GetQueryableAsync();
@@ -555,7 +547,7 @@ public async Task<PagedResultDto<CustomerMasterDto>> GetListAsync(GetCustomerMas
 
 
 * * *
-```
+```csharp
 public async Task <CustomerMasterDto> UpdateAsync(Guid id, UpdateCustomerMasterDto input)
         {
             var customerMaster = await _customerMasterRepository.GetAsync(id);
