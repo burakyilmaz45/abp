@@ -1,7 +1,7 @@
 # Getting Started
 
 ````json
-//[doc-params]
+//[docs-params]
 {
     "UI": ["MVC", "Blazor", "BlazorServer", "NG", "MAUIBlazor"],
     "DB": ["EF", "Mongo"],
