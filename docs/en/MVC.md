@@ -24,4 +24,6 @@ This tutorial explains how to **create and run** a new web application using the
 ## See Also
 
 * [All Startup Templates](startup-templates/index.md)
+
+
 ![Optimistic Concurrency](./Images/kurumsal-mobile-banner.jpg)
