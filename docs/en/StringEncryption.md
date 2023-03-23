@@ -4,7 +4,7 @@
 
 Bunun için Domain katmanında **AbpStringEncryptionOptions, IStringEncryptionService** ve **StringEncryptionService** adında üç tane sınıf oluşturuyoruz.
 
-**AbpStringEncryptionOptions**
+##AbpStringEncryptionOptions
 
 * * *
 
@@ -35,7 +35,7 @@ namespace Serender.Definitions.CustomerMasters
 
 * * *
 
-**IStringEncryptionService**
+##IStringEncryptionService
 
 * * *
 
@@ -60,7 +60,7 @@ namespace Serender.Definitions.CustomerMasters
 
 * * *
 
-**StringEncryptionService**
+##StringEncryptionService
 
 * * *
 
@@ -190,7 +190,7 @@ namespace Serender.Definitions.CustomerMasters
 - · StringEncryption modülü tamamladıktan sonra Domain.Shared katmanında Attributes isminde bir klasör oluşturuyoruz.
 - · Attributes klasörü içinde **EncryptAttribute** isminde bir sınıf oluşturuyoruz.
 
-**EncryptAttribute**
+##EncryptAttribute
 
 * * *
 ```csharp
@@ -260,7 +260,7 @@ namespace Serender.Definitions.CustomerMasters
 - · Update metodunda otomatik encryption işlemini kullanabilmek için yeni bir **CustomerMasterUpdateDtoMapper** isminde yeni bir Mapper sınıfı oluşturuyoruz.
 - · Bu Mapper sınıflarında System.Reflection kütüphanesini kullanarak propertyleri alıp source’tan  destination’a değerleri taşıyoruz.
 
-**CustomerMasterEnctyptDtoMapper**
+##CustomerMasterEnctyptDtoMapper
 
 * * *
 ```csharp
@@ -322,7 +322,7 @@ namespace Serender.Definitions
 ```
 * * *
 
-**CustomCustomerMasterMapper**
+##CustomCustomerMasterMapper
 
 * * *
 ```csharp
@@ -385,7 +385,7 @@ namespace Serender.Definitions
 ```
 * * *
 
-**CustomerMasterUpdateDtoMapper**
+##CustomerMasterUpdateDtoMapper
 
 * * *
 ```csharp
@@ -447,7 +447,7 @@ namespace Serender.Definitions
 ```
 * * *
 
-**APPLICATION KATMANINDA BULUNAN CUSTOMERMASTER SINIFINDA YAPILMASI GEREKEN DEĞİŞİKLİKLER**
+##APPLICATION KATMANINDA BULUNAN CUSTOMERMASTER SINIFINDA YAPILMASI GEREKEN DEĞİŞİKLİKLER
 
 - Application katmanında bulunan CustomerMasterAppService sınıfı içerine ilk olarak StringEncryption ve ObjectMapper interface’ leri ekliyoruz.
 
@@ -472,7 +472,7 @@ public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAp
 ```
 * * *
 
-**CreateAsync Metodu**
+##CreateAsync Metodu
 
 · Oluşturmuş olduğumuz Mapper sınıfına kullanıcıdan gelen input değerlerini gönderiyoruz.
 
@@ -537,7 +537,7 @@ public async Task<PagedResultDto<CustomerMasterDto>> GetListAsync(GetCustomerMas
 ```
 * * *
 
-**UpdateAsync metodu**
+##UpdateAsync metodu
 
 · Bir return’ e ihtiyacımız olduğu için **UpdateAsync** metodunu Task&lt;TResult&gt; yapısına dönüştürüyoruz.
 
