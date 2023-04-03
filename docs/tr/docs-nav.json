@@ -1,63 +1,10 @@
 {
     "items": [
-      {
-          "text":"DENEMEMenu",
-          "path":"markdown.md",
-          "items":[
-              {
-              "text":"Markdown Sayfası",
-                   "path":"markdown.md"
-              },
-              {
-              "text":"HTML sayfası",
-              "path":"ilkdeneme.md"
-              }
-          ]
-      },
+      
         
         {
           "text":"String Encryption",
-          "path":"StringEncryption.md"
-      },
-        {
-          "text":"Image",
-          "path":"MVC.md"
-      },
-        
-      {
-        "text": "Getting Started",
-        "items": [
-          {
-            "text": "Web Application",
-            "path": "Getting-Started.md",
-            "items": [
-              {
-                "text": "1: Setup Your Development Environment",
-                "path": "Getting-Started-Setup-Environment.md"
-              },
-              {
-                "text": "2: Creating a New Solution",
-                "path": "Getting-Started-Create-Solution.md"
-              }
-            ]
-          },
-          {
-            "text": "Console Application",
-            "path": "Startup-Templates/Console.md"
-          },
-          {
-            "text": "WPF Application",
-            "path": "Startup-Templates/WPF.md"
-          },
-          {
-            "text": "MAUI",
-            "path": "Startup-Templates/MAUI.md"
-          },
-          {
-            "text": "Empty Web Project",
-            "path": "Getting-Started-AspNetCore-Application.md"
-          }
-        ]
+          "path":"StringEncryptionTR.md"
       }
     ]
   }
