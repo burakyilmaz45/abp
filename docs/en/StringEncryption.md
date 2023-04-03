@@ -1,8 +1,8 @@
 ## STRING ENCRYPTION
 
-İlk olarak Volo.Abp.Security paketinde bulunan StringEncryption modülü hatalı olduğu için bu modülün kodlarını ABP GitHup repository’ sinden kodlarını alıp kendimiz oluşturuyoruz.
+First of all, since the StringEncryption module in the Volo.Abp.Security package is faulty, we take the codes of this module from the ABP GitHup repository and create it ourselves.
 
-Bunun için Domain katmanında **AbpStringEncryptionOptions, IStringEncryptionService** ve **StringEncryptionService** adında üç tane sınıf oluşturuyoruz.
+For this, we create three classes named **AbpStringEncryptionOptions, IStringEncryptionService** and **StringEncryptionService** in the Domain layer.
 
 ### AbpStringEncryptionOptions
 
@@ -187,8 +187,8 @@ namespace Serender.Definitions.CustomerMasters
 ```
 * * *
 
-- · StringEncryption modülü tamamladıktan sonra Domain.Shared katmanında Attributes isminde bir klasör oluşturuyoruz.
-- · Attributes klasörü içinde **EncryptAttribute** isminde bir sınıf oluşturuyoruz.
+- · After completing the StringEncryption module, we create a folder called Attributes in the Domain.Shared layer.
+- · We create a class named **EncryptAttribute** in the Attributes folder.
 
 ### EncryptAttribute
 
@@ -212,7 +212,7 @@ namespace Serender.Definitions.Attributes
 ```
 * * *
 
-- CustomerMaster sınıfında şifreleme işlemi yapmak istediğimiz field için bu attribute’ u kullanıyoruz.
+- We use this attribute for the field that we want to encrypt in the CustomerMaster class.
 
 * * *
 ```csharp
@@ -221,9 +221,9 @@ public string Adress { get; set; }
 ```
 * * *
 
-- · Otomatik şifreleme işlemi için Application.Contracts katmanında CustomerMaster klasörüne **CustomerMasterEncryptDto** isminde yeni bir DTO ekliyoruz.
+- · For automatic encryption, we add a new DTO named **CustomerMasterEncryptDto** to the CustomerMaster folder in the Application.Contracts layer.
     
-- · Domain katmanındaki CustomerMaster.cs ‘de olduğu gibi şifrelemek istediğimiz field için EncryptAttribute’ u kullanıyoruz.
+- · As in CustomerMaster.cs in the domain layer, we use the EncryptAttribute for the field we want to encrypt.
     
 * * *
 ```csharp
@@ -255,10 +255,10 @@ namespace Serender.Definitions.CustomerMasters
 ```
 * * *
 
-- · Create metodunda otomatik encryption işlemini kullanabilmek için yeni bir **CustomerMasterEnctyptDtoMapper** isminde yeni bir Mapper sınıfı oluşturuyoruz.
-- · Get ve GetList metodunda otomatik decryption işlemini kullanabilmek için yeni bir **CustomCustomerMasterMapper** isminde yeni bir Mapper sınıfı oluşturuyoruz.
-- · Update metodunda otomatik encryption işlemini kullanabilmek için yeni bir **CustomerMasterUpdateDtoMapper** isminde yeni bir Mapper sınıfı oluşturuyoruz.
-- · Bu Mapper sınıflarında System.Reflection kütüphanesini kullanarak propertyleri alıp source’tan  destination’a değerleri taşıyoruz.
+- · We create a new Mapper class named **CustomerMasterEnctyptDtoMapper** in order to use the automatic encryption process in the Create method.
+- · In order to use automatic decryption in Get and GetList methods, we create a new Mapper class named **CustomCustomerMasterMapper**.
+- · We create a new Mapper class named **CustomerMasterUpdateDtoMapper** in order to use automatic encryption in the Update method.
+- · In these Mapper classes, we take the properties using the System.Reflection library and move the values from the source to the destination.
 
 ### CustomerMasterEnctyptDtoMapper
 
@@ -447,9 +447,9 @@ namespace Serender.Definitions
 ```
 * * *
 
-### APPLICATION KATMANINDA BULUNAN CUSTOMERMASTER SINIFINDA YAPILMASI GEREKEN DEĞİŞİKLİKLER
+### CHANGES THAT MUST BE MADE IN THE CUSTOMER MASTER CLASS IN THE APPLICATION LAYER
 
-- Application katmanında bulunan CustomerMasterAppService sınıfı içerine ilk olarak StringEncryption ve ObjectMapper interface’ leri ekliyoruz.
+- First, we add the StringEncryption and ObjectMapper interfaces to the CustomerMasterAppService class in the Application layer.
 
 * * *
 ```csharp
@@ -472,18 +472,17 @@ public class CustomerMasterAppService : DefinitionsAppService, ICustomerMasterAp
 ```
 * * *
 
-### CreateAsync Metodu
+### CreateAsync Method
 
-· Oluşturmuş olduğumuz Mapper sınıfına kullanıcıdan gelen input değerlerini gönderiyoruz.
+· We send the input values from the user to the Mapper class we have created.
 
-· Mapper ‘ dan dönen değerleri EnctyptDto isminde bir değere atıyoruz.
+· We assign the values returned from Mapper to a value called EnctyptDto.
 
-· CreateAsync için gerekli olan input değerlerini EnctyptDto değişkeninden çekiyoruz.
+· We draw the input values required for CreateAsync from the EnctyptDto variable.
 
-**GetAsync ve GetListAsync metodu**
+**GetAsync and GetListAsync method**
 
-- Bu iki metot da yapmamız gereken değişiklik sadece return işleminde kendi oluşturduğumuz mapper ‘ ı kullanmak.
-
+- The change we need to make in these two methods is to use the mapper we created ourselves in the return operation.
 * * *
 ```csharp
 public async Task<CustomerMasterDto> GetAsync(Guid id)
@@ -537,16 +536,15 @@ public async Task<PagedResultDto<CustomerMasterDto>> GetListAsync(GetCustomerMas
 ```
 * * *
 
-### UpdateAsync metodu
+### UpdateAsync method
 
-· Bir return’ e ihtiyacımız olduğu için **UpdateAsync** metodunu Task&lt;TResult&gt; yapısına dönüştürüyoruz.
+· Since we need a return, use the **UpdateAsync** method to Task&lt;TResult&gt; transforming it into structure.
 
-· Aynı işlemi Application.Contracts katmanında bulunan ICustomerMasterAppService sınıfında ve HttpApi katmanında bulunan CustomerMasterController sınıfında da gerçekleştiriyoruz.
+· We perform the same operation in the ICustomerMasterAppService class in the Application.Contracts layer and in the CustomerMasterController class in the HttpApi layer.
 
-· CreateAsync metodunda yaptığımız gibi kullanıcıdan gelen verileri oluşturduğumuz Mapper’ a gönderiyoruz ve bir değişkene atıyoruz.
+· As we did in the CreateAsync method, we send the data from the user to the Mapper we created and assign it to a variable.
 
-· Update işlemi için gerekli olan verileri kullanıcıdan gelen input yerine mapper işleminden geri dönen değerler ile gerçekleştiriyoruz.
-
+· We perform the data required for the update process with the values returned from the mapper process instead of the input from the user.
 
 * * *
 ```csharp
