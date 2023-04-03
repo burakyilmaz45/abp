@@ -2,12 +2,12 @@
     "Version":[
       {
         "DisplayName" : "1.0.0(latest)",
-        "Code" : "1",
+        "Code" : "0",
         "IsDefault": true
       },
       {
         "DisplayName" : "2.0.0",
-        "Code" : "2",
+        "Code" : "1",
         "IsDefault": false
       }
     ]
