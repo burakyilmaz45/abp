@@ -10,5 +10,15 @@
       "Code" : "tr",
       "IsDefault": false
     }
+  ],
+  "Versions": [
+    "v1.0.0": {
+      "DisplayName": "v1.0.0",
+      "DocsUrl": "/abp/dev"
+    },
+    "v2.0.0": {
+      "DisplayName": "v2.0.0",
+      "DocsUrl": "/abp/rel-2.0"
+    }
   ]
 }
