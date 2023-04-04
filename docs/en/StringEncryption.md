@@ -1,4 +1,4 @@
-## STRING ENCRYPTION
+## STRING ENCRYPTION    V2
 
 First of all, since the StringEncryption module in the Volo.Abp.Security package is faulty, we take the codes of this module from the ABP GitHup repository and create it ourselves.
 
