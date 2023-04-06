@@ -9,10 +9,6 @@
           "text":"String Encryption",
           "path":"StringEncryption.md"
       },
-        {
-          "text":"ABP docs module ile bir doküman projesi oluşturma",
-          "path":"Index.md"
-        },
     ]
   }
   
