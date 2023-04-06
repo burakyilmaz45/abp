@@ -22,6 +22,10 @@
 	  {
 	    "text":"Image",
 	    "path":"MVC.md"
+    },
+	   {
+	    "text":"DENEME",
+	    "path":"deneme.md"
     }
   ]
 }
