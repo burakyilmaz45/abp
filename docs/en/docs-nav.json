@@ -6,15 +6,15 @@
 	    "path":"Index.md"
     },
     {
-	    "text":"DENEMEMenu",
+	    "text":"Markdown and HTML Page",
 	    "path":"markdown.md",
 	    "items":[
 		    {
-			"text":"Markdown Sayfası",
+			"text":"Markdown Page",
 		     	"path":"markdown.md"
 		    },
 		    {
-			"text":"HTML sayfası",
+			"text":"HTML Page",
 			"path":"ilkdeneme.md"
 		    }
 	    ]
