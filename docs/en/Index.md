@@ -1,22 +1,21 @@
-# **ABP docs module ile bir doküman projesi oluşturma**
+# **Creating a document project with the ABP docs module**
 
-İlk olarak CMD’ de
+First in CMD
 
 ```command
 dotnet tool install -g Volo.Abp.Cli
 ```
-
-komutunu kullanarak CLI kurulumu yapıyoruz. Sonrasında
+We are installing the CLI using the command. After that
 
 ```command
 abp new Projeİsmi -dbms PostgreSQL –csf
 ```
 
-koduyla PostgreSQL veri tabanı kullanan bir MVC projesi oluşturabiliriz.
+We can create an MVC project using PostgreSQL database with code.
 
 * * *
 
-DbMigrator ve Web katmanlarında bulunan appsettings.json’ da ConnectionStrings’ i kendi veritabanımızın bilgilerine göre değiştiriyoruz.
+In appsettings.json in DbMigrator and Web layers, we change ConnectionStrings according to the information of our own database.
 
 ```JSON
 {
@@ -29,7 +28,7 @@ DbMigrator ve Web katmanlarında bulunan appsettings.json’ da ConnectionString
 
 * * *
 
-Proje klasörü içinde CMD’ yi açıyoruz. “abp add-module Volo.Docs”’ ile VoloDocs paketlerini projeye dahil ediyoruz. Eğer isterseniz bu işlemi NuGet paketlerinden Volo.Docs olarak aratıp manuel olarak ekleyebilirsiniz.
+We open CMD in the project folder. We include VoloDocs packages in the project with “abp add-module Volo.Docs”. If you want, you can add this process manually by searching Volo.Docs from NuGet packages.
 
 ```command
 abp add-module Volo.Docs
@@ -37,7 +36,7 @@ abp add-module Volo.Docs
 
 * * *
 
-Domain, EntityFrameworkCore, Application ve Web katmalarında bulunan Module sınıfına DocsModule gerekliliklerini ekliyoruz.
+We add the DocsModule requirements to the Module class in the Domain, EntityFrameworkCore, Application and Web layers.
 
 ```C#
 [DependsOn(
@@ -130,7 +129,7 @@ Domain, EntityFrameworkCore, Application ve Web katmalarında bulunan Module sı
 
 * * *
 
-Web katmanında package.json içine “@abp/docs": "^7.0.3” bağımlılığının eklemesini yapıyoruz.
+In the web layer, we add the “@abp/docs”: “^7.0.3” dependency into package.json.
 
 ```JSON
 {
@@ -148,7 +147,7 @@ Web katmanında package.json içine “@abp/docs": "^7.0.3” bağımlılığın
 
 * * *
 
-Web katmanında komut satırı terminalini açıp, “abp install-libs” yazarak yükleme işlemini gerçekleştiriyoruz.
+We perform the installation process by opening the command line terminal in the web layer and typing “abp install-libs”.
 
 ```command
 abp install-libs
@@ -156,7 +155,7 @@ abp install-libs
 
 * * *
 
-EntitiyFramework katmanında DbContext sınıfına Docs yapılandırmasını ekliyoruz.
+We add the Docs configuration to the DbContext class in the EntityFramework layer.
 
 ```C#
 protected override void OnModelCreating(ModelBuilder builder)
@@ -179,12 +178,11 @@ protected override void OnModelCreating(ModelBuilder builder)
     }
 ```
 
-ConfigureDocs veri tabanımızda iki farklı tablo eklenmesini sağlar. Bu tablolar DocsDocuments ve DocsDocumentContributors. DocsDocuments tablosu GitHub reposunda tutulan dokümanların bilgilerini ve içeriklerini tutuyor. DocsDocumentContributors ise bu dokümanlara commit işlemi yapan kişinin bilgilerini tutuyor.
+ConfigureDocs allows adding two different tables in our database. These tables are DocsDocuments and DocsDocumentContributors. The DocsDocuments table holds the information and contents of the documents kept in the GitHub repository. DocsDocumentContributors, on the other hand, keeps the information of the person committing these documents.
 
 * * *
 
-Package manager console’ u açın ve migration ekleme işlemini gerçekleştirin. Migration ekleme işlemini tamamladıktan sonra veri tabanı güncelleme işlemini yapabilirsiniz.
-
+Open the Package manager console and add the migration. After completing the migration process, you can update the database.
 ```command
 add-migration "Initial"
 ```
