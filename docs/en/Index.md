@@ -1,97 +1,196 @@
-# DENEME
+# **ABP docs module ile bir doküman projesi oluşturma**
 
-ABP Framework offers an **opinionated architecture** to build enterprise software solutions with **best practices** on top of the **.NET** and the **ASP.NET Core** platforms. It provides the fundamental infrastructure, production-ready startup templates, modules, themes, tooling, guides and documentation to implement that architecture properly and **automate the details** and repetitive works as much as possible.
+İlk olarak CMD’ de
 
-## Getting Started
+```command
+dotnet tool install -g Volo.Abp.Cli
+```
 
-* [Quick Start](Tutorials/Todo/Overall.md) is a single-part, quick-start tutorial to build a simple application with the ABP Framework. Start with this tutorial if you want to quickly understand how ABP works.
-* [Getting Started](Getting-Started.md) guide can be used to create and run ABP based solutions with different options and details.
-* [Web Application Development Tutorial](Tutorials/Part-1.md) is a complete tutorial to develop a full stack web application with all aspects of a real-life solution.
+komutunu kullanarak CLI kurulumu yapıyoruz. Sonrasında
 
-### UI Framework Options
+```command
+abp new Projeİsmi -dbms PostgreSQL –csf
+```
 
-ABP Framework can work with any UI framework, while the following frameworks are supported out of the box:
+koduyla PostgreSQL veri tabanı kullanan bir MVC projesi oluşturabiliriz.
 
-<img width="500" src="images/ui-options.png">
+* * *
 
-### Database Provider Options
+DbMigrator ve Web katmanlarında bulunan appsettings.json’ da ConnectionStrings’ i kendi veritabanımızın bilgilerine göre değiştiriyoruz.
 
-ABP Framework can work with any database provider, while the following providers are supported out of the box:
+```JSON
+{
+  
+  "ConnectionStrings": {
+    "Default": "Server=localhost;Port=5432;Database=DocsPostgreSql;User ID=postgres;Password=123456;"
+  }
+}
+```
 
-<img width="500" src="images/db-options.png">
+* * *
 
-## Exploring the Documentation
+Proje klasörü içinde CMD’ yi açıyoruz. “abp add-module Volo.Docs”’ ile VoloDocs paketlerini projeye dahil ediyoruz. Eğer isterseniz bu işlemi NuGet paketlerinden Volo.Docs olarak aratıp manuel olarak ekleyebilirsiniz.
 
-ABP has a **comprehensive documentation** that not only explains the ABP Framework, but also includes **guides** and **samples** to help you on creating a **maintainable solution** by introducing and discussing common **software development principle and best practices**.
+```command
+abp add-module Volo.Docs
+```
 
-### Architecture
+* * *
 
-ABP offers a complete, modular and layered software architecture based on [Domain Driven Design](Domain-Driven-Design.md) principles and patterns. It also provides the necessary infrastructure to implement this architecture.
+Domain, EntityFrameworkCore, Application ve Web katmalarında bulunan Module sınıfına DocsModule gerekliliklerini ekliyoruz.
 
-* See the [Modularity](Module-Development-Basics.md) document to understand the module system.
-* [Implementing Domain Driven Design book](https://abp.io/books/implementing-domain-driven-design?ref=doc) is an ultimate guide for who want to understand and implement the DDD with the ABP Framework.
-* [Microservice Architecture](Microservice-Architecture.md) document explains how ABP helps to create a microservice solution.
-* [Multi-Tenancy](Multi-Tenancy.md) document introduces multi-tenancy and explores the ABP multi-tenancy infrastructure.
+```C#
+[DependsOn(
+    typeof(DocsDomainModule),// eklenen gereklilik
+    typeof(VoloDocsPostgreDomainSharedModule),
+    typeof(AbpAuditLoggingDomainModule),
+    typeof(AbpBackgroundJobsDomainModule),
+    typeof(AbpFeatureManagementDomainModule),
+    typeof(AbpIdentityDomainModule),
+    typeof(AbpOpenIddictDomainModule),
+    typeof(AbpPermissionManagementDomainOpenIddictModule),
+    typeof(AbpPermissionManagementDomainIdentityModule),
+    typeof(AbpSettingManagementDomainModule),
+    typeof(AbpTenantManagementDomainModule),
+    typeof(AbpEmailingModule)
+)]
+    public class VoloDocsPostgreDomainModule : AbpModule
+{
 
-### Infrastructure
+}
+```
 
-There are a lot of features provided by the ABP Framework to achieve real world scenarios easier, like [Event Bus](Event-Bus.md), [Background Job System](Background-Jobs.md), [Audit Logging](Audit-Logging.md), [BLOB Storing](Blob-Storing.md), [Data Seeding](Data-Seeding.md), [Data Filtering](Data-Filtering.md).
+* * *
 
-### Cross Cutting Concerns
+```C#
+[DependsOn(
+    typeof(DocsEntityFrameworkCoreModule),//eklenen gereklilik
+    typeof(VoloDocsPostgreDomainModule),
+    typeof(AbpIdentityEntityFrameworkCoreModule),
+    typeof(AbpOpenIddictEntityFrameworkCoreModule),
+    typeof(AbpPermissionManagementEntityFrameworkCoreModule),
+    typeof(AbpSettingManagementEntityFrameworkCoreModule),
+    typeof(AbpEntityFrameworkCorePostgreSqlModule),
+    typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
+    typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+    typeof(AbpTenantManagementEntityFrameworkCoreModule),
+    typeof(AbpFeatureManagementEntityFrameworkCoreModule)
+    )]
 
-ABP also simplifies (and even automates wherever possible) cross cutting concerns and common non-functional requirements like [Exception Handling](Exception-Handling.md), [Validation](Validation.md), [Authorization](Authorization.md), [Localization](Localization.md), [Caching](Caching.md), [Dependency Injection](Dependency-Injection.md), [Setting Management](Settings.md), etc. 
+    public class VoloDocsPostgreEntityFrameworkCoreModule : AbpModule
+{
 
-### Application Modules
+}
+```
 
-Application Modules provides pre-built application functionalities;
+* * *
 
-* [**Account**](Modules/Account.md): Provides UI for the account management and allows user to login/register to the application.
-* **[Identity](Modules/Identity.md)**: Manages organization units, roles, users and their permissions, based on the Microsoft Identity library.
-* [**OpenIddict**](Modules/OpenIddict.md): Integrates to OpenIddict.
-* [**Tenant Management**](Modules/Tenant-Management.md): Manages tenants for a [multi-tenant](Multi-Tenancy.md) (SaaS) application.
+```C#
+[DependsOn(
+    typeof(DocsApplicationModule),//eklenen gereklilik
+    typeof(VoloDocsPostgreDomainModule),
+    typeof(AbpAccountApplicationModule),
+    typeof(VoloDocsPostgreApplicationContractsModule),
+    typeof(AbpIdentityApplicationModule),
+    typeof(AbpPermissionManagementApplicationModule),
+    typeof(AbpTenantManagementApplicationModule),
+    typeof(AbpFeatureManagementApplicationModule),
+    typeof(AbpSettingManagementApplicationModule)
+    )]
 
-See the [Application Modules](Modules/Index.md) document for all pre-built modules.
+    public class VoloDocsPostgreApplicationModule : AbpModule
+{
 
-### Startup Templates
+}
+```
 
-The [Startup templates](Startup-Templates/Index.md) are pre-built Visual Studio solution templates. You can create your own solution based on these templates to **immediately start your development**.
+* * *
 
-## Books
+```C#
+[DependsOn(
+    typeof(DocsWebModule),//eklenen gereklilik
+    typeof(VoloDocsPostgreHttpApiModule),
+    typeof(VoloDocsPostgreApplicationModule),
+    typeof(VoloDocsPostgreEntityFrameworkCoreModule),
+    typeof(AbpAutofacModule),
+    typeof(AbpIdentityWebModule),
+    typeof(AbpSettingManagementWebModule),
+    typeof(AbpAccountWebOpenIddictModule),
+    typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
+    typeof(AbpTenantManagementWebModule),
+    typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpSwashbuckleModule)
+    )]
 
-### Mastering ABP Framework
+    public class VoloDocsPostgreWebModule : AbpModule
+{
 
-![abp-book](images/abp-book.png)
+}
+```
 
-*Mastering ABP Framework* is an ultimate guide to get started and expertise with the ABP Framework. It is authored by Halil İbrahim Kalkan, the creator and the lead developer of the ABP Framework.
+* * *
 
-**[You can order it from Amazon now](https://www.amazon.com/Mastering-ABP-Framework-maintainable-implementing-dp-1801079242/dp/1801079242)!**
+Web katmanında package.json içine “@abp/docs": "^7.0.3” bağımlılığının eklemesini yapıyoruz.
 
-### Free E-Book: Implementing Domain Driven Design
+```JSON
+{
+  "version": "1.0.0",
+  "name": "my-app",
+  "private": true,
+  "dependencies": {
+    "@abp/aspnetcore.mvc.ui.theme.leptonxlite": "~2.0.3",
+    "@abp/docs": "^7.0.3"
+  }
 
-![Implementing Domain Driven Design](images/implementing-domain-driven-design-book.png)
 
-A **practical guide** for implementing Domain Driven Design (DDD). While the implementation details are **based on the ABP Framework** infrastructure, the basic concepts, principles and models can be applied to any solution, even if it is not a .NET solution.
+}
+```
 
-**[Click here to get your free copy](https://abp.io/books/implementing-domain-driven-design?ref=doc).**
+* * *
 
-## ABP Community
+Web katmanında komut satırı terminalini açıp, “abp install-libs” yazarak yükleme işlemini gerçekleştiriyoruz.
 
-### The Source Code
+```command
+abp install-libs
+```
 
-ABP is hosted on GitHub. See [the source code](https://github.com/abpframework).
+* * *
 
-### ABP Community Web Site
+EntitiyFramework katmanında DbContext sınıfına Docs yapılandırmasını ekliyoruz.
 
-The [ABP Community](https://community.abp.io/) is a website to publish articles and share knowledge about the ABP Framework. You can also create content for the community!
+```C#
+protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
 
-### Blog
+        /* Include modules to your migration db context */
 
-Follow the [ABP Blog](https://blog.abp.io/) to learn the latest happenings in the ABP Framework.
+        builder.ConfigurePermissionManagement();
+        builder.ConfigureSettingManagement();
+        builder.ConfigureBackgroundJobs();
+        builder.ConfigureAuditLogging();
+        builder.ConfigureIdentity();
+        builder.ConfigureOpenIddict();
+        builder.ConfigureFeatureManagement();
+        builder.ConfigureTenantManagement();
+        builder.ConfigureDocs();//Eklenen yapılandırma
 
-### Samples
 
-See the [sample projects](Samples/Index.md) built with the ABP Framework.
+    }
+```
 
-### Want to Contribute?
+ConfigureDocs veri tabanımızda iki farklı tablo eklenmesini sağlar. Bu tablolar DocsDocuments ve DocsDocumentContributors. DocsDocuments tablosu GitHub reposunda tutulan dokümanların bilgilerini ve içeriklerini tutuyor. DocsDocumentContributors ise bu dokümanlara commit işlemi yapan kişinin bilgilerini tutuyor.
 
-ABP is a community-driven open source project. See [the contribution guide](Contribution/Index.md) if you want to be a part of this project.
+* * *
+
+Package manager console’ u açın ve migration ekleme işlemini gerçekleştirin. Migration ekleme işlemini tamamladıktan sonra veri tabanı güncelleme işlemini yapabilirsiniz.
+
+```command
+add-migration "Initial"
+```
+
+* * *
+
+```command
+update-database
+```
